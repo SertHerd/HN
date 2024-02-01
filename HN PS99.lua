@@ -60,14 +60,10 @@ KeyTab:AddButton({
       KeyTab:AddButton({
         Name = "Check Key",
         Callback = function()
-              if _G.KeyInput == _G.Key999999999 then
-              DestroyUI()
-              loader()
-              CorrectKeyNotification()
-              else
-                  IncorrectKeyNotification()
-              end
-          end    
+          local status = checkkey(_G.KeyInput)
+          if status then
+            DestroyUI()
+          end
       })
       _G.Getkey=true
       end
