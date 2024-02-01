@@ -6,8 +6,6 @@ _G.type = '1'
 _G.Getkey = false
 _G.KeyInput = ""
 _G.apiUrl = base64decode(data)
-print(Getkey)
-print(_G.apiUrl)
 -- Tab
 local KeyTab = Window:MakeTab({
 	Name = "Key System",
