@@ -1,5 +1,4 @@
 print("Loading...")
-OrionLib:Destroy()
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 local Window = OrionLib:MakeWindow({Name = "Key System", HidePremium = true, SaveConfig = true, ConfigFolder = "HN GAMING",IntroText = "HN Key System",IntroEnabled = true,IntroIcon = "https://cdn.discordapp.com/icons/1108055090016825494/a_2ed73b4f7b8dfa9a9260b6e709dc4e29.gif?size=512",Icon = "https://cdn.discordapp.com/icons/1108055090016825494/a_2ed73b4f7b8dfa9a9260b6e709dc4e29.gif?size=512"})
 -- Var
