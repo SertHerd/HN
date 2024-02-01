@@ -5,7 +5,6 @@ _G.Data = "aHR0cDovLzI2Ljg0LjExOS4yMzI6MjAwMA=="
 _G.type = '1'
 _G.Getkey = false
 _G.KeyInput = ""
-local apiUrl = "http://26.84.119.232:2000"
 -- Tab
 local KeyTab = Window:MakeTab({
 	Name = "Key System",
