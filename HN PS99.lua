@@ -47,8 +47,6 @@ KeyTab:AddButton({
             print('Error:', data.error)
             return false
         end
-    else
-        return false
     end
       KeyTab:AddTextbox({
         Name = "Key",
@@ -64,7 +62,6 @@ KeyTab:AddButton({
           if status then
             DestroyUI()
           end
-        end
       })
       _G.Getkey=true
       end
@@ -72,37 +69,39 @@ KeyTab:AddButton({
 })
 -- Function
 function checkkey(key)
-    local success, response = pcall(function()
-        return game:HttpGet(apiUrl .. "/checkkey" .. "?hwid=" .. hwid .. "&key=" .. key)
-    end)
-    if success and response then
-        local data, decodeError = game.HttpService:JSONDecode(response)
-        if decodeError then
-            print('JSON Decode Error:', decodeError)
-            return false
-        end
-        if type(data) == 'table' and data.success then
-            OrionLib:MakeNotification({
-                Name = "Loading!",
-                Image = "rbxassetid://4483345998",
-                Time = 10
-            })
-            -- if _G.type == '1' then
-            -- else _G.type == '2' then
-            -- end
-            return true
-        else
-            print('Error:', data.error)
-            OrionLib:MakeNotification({
-            Name = "Wrong Key!",
-            Image = "rbxassetid://4483345998",
-            Time = 10
-            })
-            return false
-        end
-    else
+  local success, response = pcall(function()
+    return game:HttpGet(apiUrl .. "/checkkey" .. "?hwid=" .. hwid .. "&key=" .. key)
+  end)
+  if success and response then
+    local data, decodeError = game.HttpService:JSONDecode(response)
+    if decodeError then
+        print('JSON Decode Error:', decodeError)
         return false
     end
+    if type(data) == 'table' and data.success then
+      OrionLib:MakeNotification({
+        Name = "Loading!",
+        Image = "rbxassetid://4483345998",
+        Time = 10
+      })
+      if _G.type == '1' then
+        loadstring(game:HttpGet("https://www.hngaming.tk/autorankpet.txt"))()
+      else _G.type == '2' then
+        loadstring(game:HttpGet("https://www.hngaming.tk/autorankpetnovip.txt"))()
+      end
+        return true
+    else
+        print('Error:', data.error)
+        OrionLib:MakeNotification({
+          Name = "Wrong Key!",
+          Image = "rbxassetid://4483345998",
+          Time = 10
+        })
+        return false
+    end
+else
+    return false
+end
 end 
 function base64decode(data)
   local b='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
