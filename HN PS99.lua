@@ -87,11 +87,9 @@ function checkkey(key)
                 Image = "rbxassetid://4483345998",
                 Time = 10
             })
-            if _G.type == '1' then
-                loadstring(game:HttpGet("https://www.hngaming.tk/autorankpet.txt"))()
-            elseif _G.type == '2' then
-                loadstring(game:HttpGet("https://www.hngaming.tk/autorankpetnovip.txt"))()
-            end
+            -- if _G.type == '1' then
+            -- else _G.type == '2' then
+            -- end
             return true
         else
             print('Error:', data.error)
@@ -124,6 +122,14 @@ end
 function loader()
     print("hello")
   end
+function checkkey(key)
+    if key == "123" then
+        return true
+    else 
+        return false
+    end
+end
+
 function CorrectKeyNotification()
     OrionLib:MakeNotification({
       Name = "Correct Key!",
