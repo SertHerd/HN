@@ -1,10 +1,10 @@
-print("Loading...")
+print("loading...")
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 local Window = OrionLib:MakeWindow({Name = "Key System", HidePremium = true, SaveConfig = true, ConfigFolder = "HN GAMING",IntroText = "HN Key System",IntroEnabled = true,IntroIcon = "https://cdn.discordapp.com/icons/1108055090016825494/a_2ed73b4f7b8dfa9a9260b6e709dc4e29.gif?size=512",Icon = "https://cdn.discordapp.com/icons/1108055090016825494/a_2ed73b4f7b8dfa9a9260b6e709dc4e29.gif?size=512"})
 -- Var
 _G.Data = "aHR0cDovLzI2Ljg0LjExOS4yMzI6MjAwMA=="
 _G.type = '1'
-local Getkey = false
+_G.Getkey = false
 _G.KeyInput = ""
 local apiUrl = "http://26.84.119.232:2000"
 -- Tab
@@ -23,6 +23,7 @@ local KeySection = KeyTab:AddSection({
 KeyTab:AddButton({
   Name = "Get Key",
   Callback = function()
+    if _G.Getkey == false then
       local hwid = game:GetService("RbxAnalyticsService"):GetClientId()
       local success, response = pcall(function()
         return game:HttpGet(apiUrl .. "/getkey" .. "?hwid=" .. hwid)
@@ -33,6 +34,7 @@ KeyTab:AddButton({
             print('JSON Decode Error:', decodeError)
             return false
         end
+    
         if type(data) == 'table' and data.success then
               local link_get_key = data.link_get_key
               print("Link Get Key: " .. link_get_key)
@@ -47,23 +49,27 @@ KeyTab:AddButton({
             print('Error:', data.error)
             return false
         end
+    else
+        return false
+    end
+      KeyTab:AddTextbox({
+        Name = "Key",
+        TextDisappear = true,
+        Callback = function(Value)
+              _G.KeyInput = Value
+        end
+      })
+      KeyTab:AddButton({
+        Name = "Check Key",
+        Callback = function()
+          local status = checkkey(_G.KeyInput)
+          if status then
+            DestroyUI()
+          end
+      })
+      _G.Getkey=true
       end
     end    
-})
-KeyTab:AddTextbox({
-  Name = "Key",
-  TextDisappear = false,
-  Callback = function(Value)
-        _G.KeyInput = Value
-  end
-})
-KeyTab:AddButton({
-  Name = "Check Key",
-  Callback = function()
-    local status = checkkey(_G.KeyInput)
-    if status then
-      DestroyUI()
-    end
 })
 -- Function
 function checkkey(key)
@@ -116,7 +122,6 @@ function base64decode(data)
       return string.char(c)
   end))
 end
-
 function CorrectKeyNotification()
     OrionLib:MakeNotification({
       Name = "Correct Key!",
