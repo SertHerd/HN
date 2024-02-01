@@ -25,6 +25,7 @@ KeyTab:AddButton({
     if _G.Getkey == false then
       local hwid = game:GetService("RbxAnalyticsService"):GetClientId()
       local success, response = pcall(function()
+        print("Get Key...")
         return game:HttpGet(apiUrl .. "/getkey" .. "?hwid=" .. hwid)
       end)
       if success and response then
