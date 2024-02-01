@@ -23,7 +23,6 @@ local KeySection = KeyTab:AddSection({
 KeyTab:AddButton({
   Name = "Get Key",
   Callback = function()
-    if Getkey == false then
       local hwid = game:GetService("RbxAnalyticsService"):GetClientId()
       local success, response = pcall(function()
         return game:HttpGet(apiUrl .. "/getkey" .. "?hwid=" .. hwid)
@@ -34,7 +33,6 @@ KeyTab:AddButton({
             print('JSON Decode Error:', decodeError)
             return false
         end
-    
         if type(data) == 'table' and data.success then
               local link_get_key = data.link_get_key
               print("Link Get Key: " .. link_get_key)
@@ -49,27 +47,23 @@ KeyTab:AddButton({
             print('Error:', data.error)
             return false
         end
-    else
-        return false
-    end
-      KeyTab:AddTextbox({
-        Name = "Key",
-        TextDisappear = true,
-        Callback = function(Value)
-              _G.KeyInput = Value
-        end
-      })
-      KeyTab:AddButton({
-        Name = "Check Key",
-        Callback = function()
-          local status = checkkey(_G.KeyInput)
-          if status then
-            DestroyUI()
-          end
-      })
-      Getkey=true
       end
     end    
+})
+KeyTab:AddTextbox({
+  Name = "Key",
+  TextDisappear = false,
+  Callback = function(Value)
+        _G.KeyInput = Value
+  end
+})
+KeyTab:AddButton({
+  Name = "Check Key",
+  Callback = function()
+    local status = checkkey(_G.KeyInput)
+    if status then
+      DestroyUI()
+    end
 })
 -- Function
 function checkkey(key)
