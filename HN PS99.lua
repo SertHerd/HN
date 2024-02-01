@@ -4,7 +4,7 @@ local Window = OrionLib:MakeWindow({Name = "Key System", HidePremium = true, Sav
 -- Var
 _G.Data = "aHR0cDovLzI2Ljg0LjExOS4yMzI6MjAwMA=="
 _G.type = '1'
-_G.Getkey = false
+local Getkey = false
 _G.KeyInput = ""
 local apiUrl = "http://26.84.119.232:2000"
 -- Tab
@@ -23,7 +23,7 @@ local KeySection = KeyTab:AddSection({
 KeyTab:AddButton({
   Name = "Get Key",
   Callback = function()
-    if _G.Getkey == false then
+    if Getkey == false then
       local hwid = game:GetService("RbxAnalyticsService"):GetClientId()
       local success, response = pcall(function()
         return game:HttpGet(apiUrl .. "/getkey" .. "?hwid=" .. hwid)
@@ -67,7 +67,7 @@ KeyTab:AddButton({
             DestroyUI()
           end
       })
-      _G.Getkey=true
+      Getkey=true
       end
     end    
 })
