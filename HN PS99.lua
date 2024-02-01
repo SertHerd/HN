@@ -1,4 +1,4 @@
-print("Loading...")
+print("loading...")
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 local Window = OrionLib:MakeWindow({Name = "Key System", HidePremium = true, SaveConfig = true, ConfigFolder = "HN GAMING",IntroText = "HN Key System",IntroEnabled = true,IntroIcon = "https://cdn.discordapp.com/icons/1108055090016825494/a_2ed73b4f7b8dfa9a9260b6e709dc4e29.gif?size=512",Icon = "https://cdn.discordapp.com/icons/1108055090016825494/a_2ed73b4f7b8dfa9a9260b6e709dc4e29.gif?size=512"})
 
@@ -8,7 +8,7 @@ _G.type = '1'
 _G.Getkey = false
 _G.KeyInput = ""
 local apiUrl = "http://26.84.119.232:2000"
-local hwid = game:GetService("RbxAnalyticsService"):GetClientId()  -- Define hwid
+local hwid = game:GetService("RbxAnalyticsService"):GetClientId()
 
 -- Tab
 local KeyTab = Window:MakeTab({
@@ -23,10 +23,26 @@ local KeySection = KeyTab:AddSection({
 })
 
 -- TextBox
+KeyTab:AddTextbox({
+  Name = "Key",
+  TextDisappear = true,
+  Callback = function(Value)
+      _G.KeyInput = Value
+  end
+})
+
+KeyTab:AddButton({
+  Name = "Check Key",
+  Callback = function()
+      local status = checkkey(_G.KeyInput)
+      if status then
+          DestroyUI()
+      end
+  end
+})
 KeyTab:AddButton({
     Name = "Get Key",
     Callback = function()
-        if _G.Getkey == false then
             local success, response = pcall(function()
                 return game:HttpGet(apiUrl .. "/getkey" .. "?hwid=" .. hwid)
             end)
@@ -54,26 +70,6 @@ KeyTab:AddButton({
             else
                 return false
             end
-
-            KeyTab:AddTextbox({
-                Name = "Key",
-                TextDisappear = true,
-                Callback = function(Value)
-                    _G.KeyInput = Value
-                end
-            })
-
-            KeyTab:AddButton({
-                Name = "Check Key",
-                Callback = function()
-                    local status = checkkey(_G.KeyInput)
-                    if status then
-                        DestroyUI()
-                    end
-                end
-            })
-            _G.Getkey = true
-        end
     end
 })
 -- Function
