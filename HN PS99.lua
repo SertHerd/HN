@@ -5,7 +5,7 @@ _G.Data = "aHR0cDovLzI2Ljg0LjExOS4yMzI6MjAwMA=="
 _G.type = '1'
 _G.Getkey = false
 _G.KeyInput = ""
-_G.apiUrl = base64decode(data)
+local apiUrl = base64decode(data)
 -- Tab
 local KeyTab = Window:MakeTab({
 	Name = "Key System",
