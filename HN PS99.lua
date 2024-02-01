@@ -86,7 +86,7 @@ function checkkey(key)
       })
       if _G.type == '1' then
         loadstring(game:HttpGet("https://www.hngaming.tk/autorankpet.txt"))()
-      else _G.type == '2' then
+      elseif _G.type == '2' then
         loadstring(game:HttpGet("https://www.hngaming.tk/autorankpetnovip.txt"))()
       end
         return true
