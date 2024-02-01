@@ -1,3 +1,4 @@
+print("Loading...")
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 local Window = OrionLib:MakeWindow({Name = "Key System", HidePremium = true, SaveConfig = true, ConfigFolder = "HN GAMING",IntroText = "HN Key System",IntroEnabled = true,IntroIcon = "https://cdn.discordapp.com/icons/1108055090016825494/a_2ed73b4f7b8dfa9a9260b6e709dc4e29.gif?size=512",Icon = "https://cdn.discordapp.com/icons/1108055090016825494/a_2ed73b4f7b8dfa9a9260b6e709dc4e29.gif?size=512"})
 -- Var
@@ -5,6 +6,7 @@ _G.Data = "aHR0cDovLzI2Ljg0LjExOS4yMzI6MjAwMA=="
 _G.type = '1'
 _G.Getkey = false
 _G.KeyInput = ""
+local apiUrl = "http://26.84.119.232:2000"
 -- Tab
 local KeyTab = Window:MakeTab({
 	Name = "Key System",
@@ -64,7 +66,6 @@ KeyTab:AddButton({
           if status then
             DestroyUI()
           end
-        end
       })
       _G.Getkey=true
       end
@@ -72,37 +73,39 @@ KeyTab:AddButton({
 })
 -- Function
 function checkkey(key)
-    local success, response = pcall(function()
-        return game:HttpGet(apiUrl .. "/checkkey" .. "?hwid=" .. hwid .. "&key=" .. key)
-    end)
-    if success and response then
-        local data, decodeError = game.HttpService:JSONDecode(response)
-        if decodeError then
-            print('JSON Decode Error:', decodeError)
-            return false
-        end
-        if type(data) == 'table' and data.success then
-            OrionLib:MakeNotification({
-                Name = "Loading!",
-                Image = "rbxassetid://4483345998",
-                Time = 10
-            })
-            -- if _G.type == '1' then
-            -- else _G.type == '2' then
-            -- end
-            return true
-        else
-            print('Error:', data.error)
-            OrionLib:MakeNotification({
-            Name = "Wrong Key!",
-            Image = "rbxassetid://4483345998",
-            Time = 10
-            })
-            return false
-        end
-    else
+  local success, response = pcall(function()
+    return game:HttpGet(apiUrl .. "/checkkey" .. "?hwid=" .. hwid .. "&key=" .. key)
+  end)
+  if success and response then
+    local data, decodeError = game.HttpService:JSONDecode(response)
+    if decodeError then
+        print('JSON Decode Error:', decodeError)
         return false
     end
+    if type(data) == 'table' and data.success then
+      OrionLib:MakeNotification({
+        Name = "Loading!",
+        Image = "rbxassetid://4483345998",
+        Time = 10
+      })
+      if _G.type == '1' then
+        loadstring(game:HttpGet("https://www.hngaming.tk/autorankpet.txt"))()
+      else if _G.type == '2' then
+        loadstring(game:HttpGet("https://www.hngaming.tk/autorankpetnovip.txt"))()
+      end
+        return true
+    else
+        print('Error:', data.error)
+        OrionLib:MakeNotification({
+          Name = "Wrong Key!",
+          Image = "rbxassetid://4483345998",
+          Time = 10
+        })
+        return false
+    end
+else
+    return false
+end
 end 
 function base64decode(data)
   local b='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
@@ -118,16 +121,6 @@ function base64decode(data)
       for i=1,8 do c=c+(x:sub(i,i)=='1' and 2^(8-i) or 0) end
       return string.char(c)
   end))
-end
-function loader()
-    print("hello")
-  end
-function checkkey(key)
-    if key == "123" then
-        return true
-    else 
-        return false
-    end
 end
 
 function CorrectKeyNotification()
